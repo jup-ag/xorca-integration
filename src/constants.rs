@@ -1,4 +1,4 @@
-use solana_sdk::{pubkey, pubkey::Pubkey};
+use solana_pubkey::{Pubkey, pubkey};
 
 pub const XORCA_STAKING_PROGRAM_ID: Pubkey = pubkey!("StaKE6XNKVVhG8Qu9hDJBqCW3eRe7MDGLz17nJZetLT");
 pub const XORCA_STAKING_PROGRAM_LABEL: &str = "xORCAStakingProgram";

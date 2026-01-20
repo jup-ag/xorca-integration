@@ -1,5 +1,4 @@
-use thiserror::Error;
-
+use anyhow::{Context, Result};
 // ----------------------------------
 // STATE
 // ----------------------------------
@@ -11,7 +10,7 @@ pub struct State {
 }
 
 impl State {
-    pub fn load(account_data: &[u8]) -> PdaDataResult<Self> {
+    pub fn load(account_data: &[u8]) -> Result<Self> {
         let mut offset = 8; // skip discriminator, padding1, bump and vault_bump
         let escrowed_orca_amount = read_u64(account_data, &mut offset)?;
         let cool_down_period_s = read_i64(account_data, &mut offset)?;
@@ -32,7 +31,7 @@ pub struct Vault {
 }
 
 impl Vault {
-    pub fn load(account_data: &[u8]) -> PdaDataResult<Self> {
+    pub fn load(account_data: &[u8]) -> Result<Self> {
         let mut offset = 64; // skip token mint and owner
         let vault_orca_amount = read_u64(account_data, &mut offset)?;
         Ok(Self { vault_orca_amount })
@@ -49,24 +48,12 @@ pub struct XorcaMint {
 }
 
 impl XorcaMint {
-    pub fn load(account_data: &[u8]) -> PdaDataResult<Self> {
+    pub fn load(account_data: &[u8]) -> Result<Self> {
         let mut offset = 36; // skip mint authority
         let xorca_supply = read_u64(account_data, &mut offset)?;
         Ok(Self { xorca_supply })
     }
 }
-
-// ----------------------------------
-// TYPES
-// ----------------------------------
-
-#[derive(Debug, Error)]
-pub enum PdaDataError {
-    #[error("account data too short: need at least {needed} bytes, found {found}")]
-    TooShort { needed: usize, found: usize },
-}
-
-pub type PdaDataResult<T> = std::result::Result<T, PdaDataError>;
 
 // ----------------------------------
 // UTILS
@@ -75,12 +62,11 @@ pub type PdaDataResult<T> = std::result::Result<T, PdaDataError>;
 const U64_SIZE: usize = 8;
 const I64_SIZE: usize = 8;
 
-fn read_u64(data: &[u8], offset: &mut usize) -> PdaDataResult<u64> {
+fn read_u64(data: &[u8], offset: &mut usize) -> Result<u64> {
     let end = *offset + U64_SIZE;
-    let bytes = data.get(*offset..end).ok_or(PdaDataError::TooShort {
-        needed: end,
-        found: data.len(),
-    })?;
+    let bytes = data
+        .get(*offset..end)
+        .context(format!("Too short: needed {end}, found {}", data.len()))?;
     *offset = end;
     Ok(u64::from_le_bytes(
         bytes
@@ -89,12 +75,11 @@ fn read_u64(data: &[u8], offset: &mut usize) -> PdaDataResult<u64> {
     ))
 }
 
-fn read_i64(data: &[u8], offset: &mut usize) -> PdaDataResult<i64> {
+fn read_i64(data: &[u8], offset: &mut usize) -> Result<i64> {
     let end = *offset + I64_SIZE;
-    let bytes = data.get(*offset..end).ok_or(PdaDataError::TooShort {
-        needed: end,
-        found: data.len(),
-    })?;
+    let bytes = data
+        .get(*offset..end)
+        .context(format!("Too short: needed {end}, found {}", data.len()))?;
     *offset = end;
     Ok(i64::from_le_bytes(
         bytes
