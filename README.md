@@ -12,4 +12,4 @@ ATA, and produce quotes for staking ORCA into xORCA.
 ### Notes
 
 - `rust_decimal = 1.36.0` is pinned to match `jupiter-amm-interface`.
-- `solana-sdk = 2.3.1` is aligned with `jupiter-amm-interface` to avoid `Pubkey` mismatches.
+- This crate uses the split `solana-pubkey = "3"` dependency instead of the umbrella `solana-sdk` crate.
