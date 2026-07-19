@@ -783,9 +783,9 @@ checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
 
 [[package]]
 name = "solana-account"
-version = "3.4.0"
+version = "4.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "efc0ed36decb689413b9da5d57f2be49eea5bebb3cf7897015167b0c4336e731"
+checksum = "87c1b95bd432efb92837bc38001365e5acb5c0175b199bc447b08a8c320ecf6c"
 dependencies = [
  "solana-account-info",
  "solana-clock",
@@ -1555,7 +1555,7 @@ dependencies = [
 [[package]]
 name = "xorca"
 version = "0.1.4"
-source = "git+https://github.com/jup-ag/xorca.git?rev=65013887a3974d8e6c981bfc8c09b24e438259ae#65013887a3974d8e6c981bfc8c09b24e438259ae"
+source = "git+https://github.com/jup-ag/xorca.git?rev=0ceabbf04cf2a20e2a23e5a03e55530820de0bed#0ceabbf04cf2a20e2a23e5a03e55530820de0bed"
 dependencies = [
  "anyhow",
  "borsh",

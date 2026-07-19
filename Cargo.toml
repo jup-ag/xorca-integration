@@ -6,4 +6,4 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0"
 solana-pubkey = "3"
-xorca = { git = "https://github.com/jup-ag/xorca.git", rev = "65013887a3974d8e6c981bfc8c09b24e438259ae" }
+xorca = { git = "https://github.com/jup-ag/xorca.git", rev = "0ceabbf04cf2a20e2a23e5a03e55530820de0bed" }
