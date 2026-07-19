@@ -1578,7 +1578,7 @@ name = "xorca-sdk"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "solana-pubkey 3.0.0",
+ "solana-pubkey 4.2.0",
  "xorca",
 ]
 
